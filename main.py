@@ -17,6 +17,15 @@ star="<@650406306955526197>"
 xgamers="<@&750273286998589500>"
 test="<@&950428722018791464>"
 
+#change from here
+
+
+vulgar=["noob","chutiya","bsdk","bkl",'lund','lavda','bc','mc']
+replies=["look in the mirror","no need to call yourself","tera naam"]
+
+solo=["cmng","aa raha hai"]
+grp=["cmng","koi aa raha hai","aa rahe ho"]
+
 @client.event
 async def on_ready():
   print('We have logged in as {0.user}.format(client)')
@@ -25,66 +34,94 @@ async def on_ready():
 async def on_message(message):
   if message.author == client.user:
     return
-  usr=0
-  role=0
-  if message.content.startswith('.c'):
-    user="a"
-    if message.content=='.cr' or message.content=='.cronin':
-      user=ronin
-      usr=1
-    elif message.content=='.cam' or message.content=='.camjoker':
-      user=amjoker
-      usr=1
-    elif message.content=='.cax' or message.content=='.caxo':
-      user=axo
-      usr=1
-    elif message.content=='.ce' or message.content=='.cet' or message.content=='.cesakki':
-      user=et
-      usr=1
-    elif message.content=='.cl' or message.content=='.clogan':
-      user=logan
-      usr=1
-    elif message.content=='.cna' or message.content=='.cnameless':
-      user=nameless
-      usr=1
-    elif message.content=='.cna007' or message.content=='.cnameless007':
-      user=nameless007
-      usr=1
-    elif message.content=='.cno' or message.content=='.cnobody':
-      user=nobody
-      usr=1
-    elif message.content=='.cs' or message.content=='.cstar' or message.content=='.cstarhelix':
-      user=star
-      usr=1
-    elif message.content=='.ct' or message.content=='.ctest':
-      user=test
-      role=1
-    elif message.content=='.cx' or message.content=='.c' or message.content=='.cxgamers' or message.content==".cxgamer" or message.content=='.cexgamer' or message.content=='.cexgamers':  
-      user=xgamers
-      role=1
+  msg='\0'
+  #a command is passed
+  if message.content.startswith("."):
 
-    num=random.random()
-    num=int(num*10)
-    if usr==1:
-      if num%2==1:
-        user_id = "cmng "+user+"?"
-      else:
-        user_id = "aa raha hai "+user+"?"
-      msg=user_id
-    elif role==1:
-      if num%2==1:
-        user_id = "cmng "+user+"?"
-      else:
-        user_id = "koi aa raha hai "+user+"?"
-      msg=user_id
-    else:
-      msg="Command does not exist :-("
+    if  message.content=='.c':
+      msg=random.choice(grp)+" "+xgamers+"?"
+    #call command
+    elif message.content[1]=='c':
+      list=message.content[2:].split()
+      msg=call_cmnd(list)
+    #help command
+    elif message.content=='.h' or message.content=='.help':
+      msg="Help!!!\nThe command can be initiated with the '.' symbol.\nThe commands provided right now are :\n.cx to call the ex-gamers channel.\nc# in the place of # add first letter of name like:\n's' for starhelix \n'r' for ronin\n'na' for nameless\n'na007' for nameless007\n'e'/'et' for esakki\n'ax' for axo\n'am' for amjoker\nYou can write .cname in the place of name write the full name.\nAlso there are few more changes they will reveal themselves in course of time."
+    #custom command
     
+    #not proper syntax
+    else:
+      msg="Command not found :-("
+      
     await message.channel.send(msg)
-  elif message.content=='.help' or message.content=='.h':
-    help_message="The command can be initiated with the '.' symbol.\nThe commands provided right now are :\n .cx to call the ex-gamers channel and .c# in the place of # add first letter of name like 's' for starhelix 'r' for ronin, 'na' for nameless, 'na007' for nameless007 etc.\nOr\n you can write .cname"
-    await message.channel.send(help_message);
+  else:
+    list=message.content.split()
+    i=scan(list)
+    if i=='lund' or i=='lavda':
+      msg="Chota ahe tujha!"
+      await message.channel.send(msg)
+    elif i!='null':
+      msg=random.choice(replies)+" "+i
+      await message.channel.send(msg)
+      
+def scan(list):
+  for x in vulgar:
+    for i in list:
+      if x==i :
+        return i
+  return 'null'
 
+def call_cmnd(list):
+  usr=0
+  msg=" "
+  for x in list:
+    if x=='r' or x=='ronin':
+      msg=msg+" "+ronin
+      usr=usr+1
+    elif x=='am' or x=='amjoker':
+      msg=msg+" "+amjoker
+      usr=usr+1
+    elif x=='ax' or x=='axo':
+      msg=msg+" "+axo
+      usr=usr+1
+    elif x=='e' or x=='et' or x=='esakki':
+      msg=msg+" "+et
+      usr=usr+1
+    elif x=='l' or x=='logan':
+      msg=msg+" "+logan
+      usr=usr+1
+    elif x=='na' or x=='nameless':
+      msg=msg+" "+nameless
+      usr=usr+1
+    elif x=='na007' or x=='nameless007':
+      msg=msg+" "+nameless007
+      usr=usr+1
+    elif x=='no' or x=='nobody':
+      msg=msg+" "+nobody
+      usr=usr+1
+    elif x=='s' or x=='star' or x=='starhelix':
+      msg=msg+" "+star
+      usr=usr+1
+    elif x=='t' or x=='test':
+      msg=msg+" "+test
+      usr=usr+2
+    elif x=='x' or x=='xgamers' or x=='xgamer' or x=='exgamer' or x=='exgamers':  
+      msg=msg+" "+xgamers
+      usr=usr+2
+  if msg==" ":
+    return "No user exists with initials given."
+  else:
+    return num(usr,msg)+"?"
+
+def num(usr,msg):
+  if usr>=2:
+    msg=random.choice(grp)+msg
+  elif usr>0:
+    msg=random.choice(solo)+msg
+  return msg
+
+#till before this and then keep alive
+  
 keep_alive()
 my_secret = os.environ.get('TOKEN')
 client.run(my_secret)
