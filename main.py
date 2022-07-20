@@ -22,7 +22,7 @@ test="<@&950428722018791464>"
 
 pause=0
 
-vulgar=["noob",'lavde',"fuck",'fck','bitch',"chutiya","bsdk","bkl",'lund','lavda','bc','mc','gaandu','gandu','gaand','gand','f','chu']
+vulgar=["letsputsomething if necessary"]
 ur_mom=["sexy"]
 ur_mom_replies=["Your mom"]
 replies=["look in the mirror","pakka","no need to call yourself","tera naam",'tu','sabse bada']
